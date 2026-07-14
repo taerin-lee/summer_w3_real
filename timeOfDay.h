@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cstdlib>
+#include <iomanip> //조작기
 
 namespace LeeTaerin2276249 {
 
@@ -90,19 +91,25 @@ namespace LeeTaerin2276249 {
 
         friend std::istream& operator>>(std::istream& in, timeOfDay& t) {
             int h, m;
-            in >> h >> m;
-            t.testHour(h);
-            t.testMinute(m);
-            t.hour = h;
-            t.minute = m;
+            // 파일스트림에서도 안전하게 동작하도록 공백이나 줄바꿈을 건너뛰며 읽음
+            if (in >> h >> m) {
+                t.testHour(h);
+                t.testMinute(m);
+                t.hour = h;
+                t.minute = m;
+            }
             return in;
         }
 
         friend std::ostream& operator<<(std::ostream& out, const timeOfDay& t) {
-            if (t.hour < 10) out << "0";
-            out << t.hour << ":";
-            if (t.minute < 10) out << "0";
-            out << t.minute;
+
+            // out << std::setw(2) << std::setfill('0') << t.hour << ":"
+            // out << std::setw(2) << std::setfill('0') << t.minute; //조작기로 표현
+
+            out.width(2); out.fill('0'); out << t.hour << ":"; 
+            out.width(2); out.fill('0'); out << t.minute << ":"; //멤버함수로 표현
+            
+
             return out;
         }
 
