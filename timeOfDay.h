@@ -53,11 +53,25 @@ namespace LeeTaerin2276249 {
             minute = m;
         }
 
-        void print() const {
-            if (hour < 10) std::cout << "0";
-            std::cout << hour << ":";
-            if (minute < 10) std::cout << "0";
-            std::cout << minute;
+        void print(std::ofstream& out = std::cout) const {
+            out << std::setw(2) << std::setfill('0') << hour << ':';
+            out << std::setw(2) << std::setfill('0') << minute;
+            // if (hour < 10) std::cout << "0";
+            // std::cout << hour << ":";
+            // if (minute < 10) std::cout << "0";
+            // std::cout << minute;
+        }
+
+        friend std::ostream& operator<<(std::ostream& out, const timeOfDay& t) {
+            // out << std::setw(2) << std::setfill('0') << t.hour << ":"
+            // out << std::setw(2) << std::setfill('0') << t.minute; //조작기로 표현
+
+            // out.width(2); out.fill('0'); out << t.hour << ":"; 
+            // out.width(2); out.fill('0'); out << t.minute << ":"; //멤버함수로 표현
+            // return out;
+
+            t.print(out);
+            return out; //멤버함수 호출해도 ok
         }
 
         int getHour() const { return hour; }
@@ -99,18 +113,6 @@ namespace LeeTaerin2276249 {
                 t.minute = m;
             }
             return in;
-        }
-
-        friend std::ostream& operator<<(std::ostream& out, const timeOfDay& t) {
-
-            // out << std::setw(2) << std::setfill('0') << t.hour << ":"
-            // out << std::setw(2) << std::setfill('0') << t.minute; //조작기로 표현
-
-            out.width(2); out.fill('0'); out << t.hour << ":"; 
-            out.width(2); out.fill('0'); out << t.minute << ":"; //멤버함수로 표현
-            
-
-            return out;
         }
 
         friend bool operator==(const timeOfDay& t1, const timeOfDay& t2) {

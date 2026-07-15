@@ -23,7 +23,7 @@ namespace LeeTaerin2276249 {
 
         friend std::ostream& operator<<(std::ostream& os, const alarm& a) {
             os << a.name << ": ";
-            os << a.wakeTime; 
+            os << a.wakeTime; //timeOfDay의 출력연산자
             os << " alarm is " << (a.inActive ? "on" : "off") << '\n';
             return os;
         }
@@ -39,7 +39,7 @@ namespace LeeTaerin2276249 {
         friend std::istream& operator>>(std::istream& is, alarm& a) {
             std::cout << "Enter alarm name: ";
             std::getline(is >> std::ws, a.name); 
-            is >> a.wakeTime;
+            is >> a.wakeTime;//timeOfDay의 입력연산자
             std::cout << "Enter 1 or 0 (on/off): ";
             is >> a.inActive;
             return is;
